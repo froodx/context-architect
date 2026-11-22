@@ -1,0 +1,30 @@
+# Context item record. Not every item needs every field:
+# a perishable note may need only what, when and who;
+# a decision that is expensive to reverse deserves all seven Ws.
+id: adr-0007-checkout-idempotency
+kind: knowledge/decision/invariant   # instruction | knowledge | state | capability | example
+statement: One checkout attempt creates at most one order.   # what
+owner: payments team                                          # who
+approved_by: a named maintainer                               # who
+valid_from: 2026-11-20                                        # when
+review_by: 2027-05-01                                         # when
+supersedes: none                                              # when
+source: projects/checkout/docs/adr/0007.md                    # where
+scope: checkout service (bounded context)                     # where
+why: Retries after timeouts created duplicate charges.        # why (mark inference vs proven cause)
+which:                                                        # which
+  chosen: server-side idempotency key
+  rejected: [disable retry button]
+how:                                                          # how
+  verified_by: simultaneous-retry test in CI
+  verification_status: passed      # passed | failed | unverified
+  result_revision: <commit id>
+status: accepted                   # for decisions: proposed | accepted | rejected | deprecated | superseded
+relations:                         # typed links (see domain-model.md)
+  - {predicate: establishes, target: invariant-checkout-001}
+  - {predicate: supported-by, target: incident-2026-031}
+  - {predicate: approved-by, target: <named maintainer>}
+lifespan: project            # persistent | project | perishable
+sensitivity: internal        # public | internal | private | secret
+readable_by: [checkout agents, maintainers]
+writable_by: [maintainers]

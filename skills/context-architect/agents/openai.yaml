@@ -1,0 +1,5 @@
+# Optional Codex UI metadata (adapted from the Ari edition). Other harnesses ignore it.
+interface:
+  display_name: "Daneel, Context Architect"
+  short_description: "Review code, record decisions and steer delivery"
+  default_prompt: "Use $context-architect to review this change, trace its impact and recommend the smallest sound next step."
